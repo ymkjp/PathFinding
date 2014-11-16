@@ -1,4 +1,6 @@
 #include "HelloWorldScene.h"
+#include <array>
+#include <algorithm>
 
 USING_NS_CC;
 
@@ -9,10 +11,10 @@ Scene* HelloWorld::createScene()
     
     // 'layer' is an autorelease object
     auto layer = HelloWorld::create();
-
+    
     // add layer as a child to scene
     scene->addChild(layer);
-
+    
     // return the scene
     return scene;
 }
@@ -29,11 +31,32 @@ bool HelloWorld::init()
     
     visibleSize = Director::getInstance()->getVisibleSize();
     origin = Director::getInstance()->getVisibleOrigin();
-
+    
     tileMapLayer = Layer::create();
     tileMap = TMXTiledMap::create("map_02.tmx");
     domainLayer = tileMap->getLayer("Domain");
+    wallLayer = tileMap->getLayer("Wall");
     
+    Size domainSize = domainLayer->getLayerSize();
+    int worldGrid[static_cast<int>(domainSize.width)][static_cast<int>(domainSize.height)];
+
+//    typedef std::array<std::array<int,12>,12> WorldGrid;
+//    WorldGrid worldGrid;
+//    std::array<int, 12> worldGridX;
+//    std::fill(std::begin(worldGridX), std::end(worldGridX), 0);
+//    std::fill(std::begin(worldGrid), std::end(worldGrid), worldGridX);
+
+    for (int x = 0; x < sizeof(worldGrid) / sizeof(worldGrid[0]); ++x) {
+            for (int y = 0; y < sizeof(worldGrid[x]) / sizeof(worldGrid[x][0]); ++y) {
+                worldGrid[x][y] = (0 != wallLayer->getTileGIDAt(Vec2(x,y)));
+            }
+    }
+    for (int x = 0; x < sizeof(worldGrid) / sizeof(worldGrid[0]); ++x) {
+        for (int y = 0; y < sizeof(worldGrid[x]) / sizeof(worldGrid[x][0]); ++y) {
+            CCLOG("(x,y) = (%i,%i) => %i", x,y,worldGrid[x][y]);
+        }
+    }
+
     tileMapLayer->addChild(tileMap);
     tileMapLayer->setContentSize(domainLayer->getContentSize());
     

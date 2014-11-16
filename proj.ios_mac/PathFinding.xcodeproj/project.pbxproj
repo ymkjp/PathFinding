@@ -71,10 +71,10 @@
 		C59717131A170F5C008DD765 /* map_01.tmx in Resources */ = {isa = PBXBuildFile; fileRef = C59717101A170F5C008DD765 /* map_01.tmx */; };
 		C59717141A170F5C008DD765 /* isometric_grass_and_water.png in Resources */ = {isa = PBXBuildFile; fileRef = C59717111A170F5C008DD765 /* isometric_grass_and_water.png */; };
 		C59717151A170F5C008DD765 /* isometric_grass_and_water.png in Resources */ = {isa = PBXBuildFile; fileRef = C59717111A170F5C008DD765 /* isometric_grass_and_water.png */; };
-		C59717191A171376008DD765 /* rules_sewers.png in Resources */ = {isa = PBXBuildFile; fileRef = C59717181A171376008DD765 /* rules_sewers.png */; };
-		C597171A1A171376008DD765 /* rules_sewers.png in Resources */ = {isa = PBXBuildFile; fileRef = C59717181A171376008DD765 /* rules_sewers.png */; };
 		C5A1E2831A18B06D0009826F /* map_02.tmx in Resources */ = {isa = PBXBuildFile; fileRef = C5A1E2821A18B06D0009826F /* map_02.tmx */; };
 		C5A1E2841A18B06D0009826F /* map_02.tmx in Resources */ = {isa = PBXBuildFile; fileRef = C5A1E2821A18B06D0009826F /* map_02.tmx */; };
+		C5A1E2861A18C1090009826F /* blue.png in Resources */ = {isa = PBXBuildFile; fileRef = C5A1E2851A18C1090009826F /* blue.png */; };
+		C5A1E2871A18C1090009826F /* blue.png in Resources */ = {isa = PBXBuildFile; fileRef = C5A1E2851A18C1090009826F /* blue.png */; };
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
 		D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620F132DFF4E0009C878 /* AudioToolbox.framework */; };
@@ -277,8 +277,8 @@
 		C50AEC411A112EFF006C4A70 /* AStar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AStar.h; path = ../Classes/AStar.h; sourceTree = "<group>"; };
 		C59717101A170F5C008DD765 /* map_01.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = map_01.tmx; sourceTree = "<group>"; };
 		C59717111A170F5C008DD765 /* isometric_grass_and_water.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = isometric_grass_and_water.png; sourceTree = "<group>"; };
-		C59717181A171376008DD765 /* rules_sewers.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rules_sewers.png; sourceTree = "<group>"; };
 		C5A1E2821A18B06D0009826F /* map_02.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = map_02.tmx; sourceTree = "<group>"; };
+		C5A1E2851A18C1090009826F /* blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blue.png; sourceTree = "<group>"; };
 		D44C620B132DFF330009C878 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D44C620F132DFF4E0009C878 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -473,9 +473,9 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C5A1E2851A18C1090009826F /* blue.png */,
 				C59717101A170F5C008DD765 /* map_01.tmx */,
 				C5A1E2821A18B06D0009826F /* map_02.tmx */,
-				C59717181A171376008DD765 /* rules_sewers.png */,
 				C59717111A170F5C008DD765 /* isometric_grass_and_water.png */,
 				1AFAF8B916D35E4900DB1158 /* CloseNormal.png */,
 				1AFAF8BA16D35E4900DB1158 /* CloseSelected.png */,
@@ -653,7 +653,6 @@
 				5087E78617EB970100C73F5D /* Icon-76.png in Resources */,
 				5087E77F17EB970100C73F5D /* Default@2x.png in Resources */,
 				50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */,
-				C59717191A171376008DD765 /* rules_sewers.png in Resources */,
 				C5A1E2831A18B06D0009826F /* map_02.tmx in Resources */,
 				1AFAF8BC16D35E4900DB1158 /* CloseNormal.png in Resources */,
 				5087E78317EB970100C73F5D /* Icon-152.png in Resources */,
@@ -671,6 +670,7 @@
 				5087E78417EB970100C73F5D /* Icon-57.png in Resources */,
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,
 				50EF629717ECD46A001EB2F8 /* Icon-58.png in Resources */,
+				C5A1E2861A18C1090009826F /* blue.png in Resources */,
 				C59717141A170F5C008DD765 /* isometric_grass_and_water.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -682,9 +682,9 @@
 				C5A1E2841A18B06D0009826F /* map_02.tmx in Resources */,
 				5087E75317EB910900C73F5D /* CloseNormal.png in Resources */,
 				C59717131A170F5C008DD765 /* map_01.tmx in Resources */,
+				C5A1E2871A18C1090009826F /* blue.png in Resources */,
 				C59717151A170F5C008DD765 /* isometric_grass_and_water.png in Resources */,
 				503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */,
-				C597171A1A171376008DD765 /* rules_sewers.png in Resources */,
 				5087E75417EB910900C73F5D /* CloseSelected.png in Resources */,
 				5087E75517EB910900C73F5D /* HelloWorld.png in Resources */,
 			);
@@ -895,6 +895,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -925,6 +926,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (

@@ -17,6 +17,7 @@ protected:
     Vec2 origin;
     TMXTiledMap *tileMap;
     TMXLayer *domainLayer;
+    TMXLayer *wallLayer;
     Layer *tileMapLayer;
     virtual bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event);
     virtual void onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *unused_event);
