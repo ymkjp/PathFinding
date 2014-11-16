@@ -1,4 +1,6 @@
 #include "HelloWorldScene.h"
+#include <array>
+#include <algorithm>
 
 USING_NS_CC;
 
@@ -9,10 +11,10 @@ Scene* HelloWorld::createScene()
     
     // 'layer' is an autorelease object
     auto layer = HelloWorld::create();
-
+    
     // add layer as a child to scene
     scene->addChild(layer);
-
+    
     // return the scene
     return scene;
 }
@@ -27,65 +29,82 @@ bool HelloWorld::init()
         return false;
     }
     
-    Size visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
-
-    /////////////////////////////
-    // 2. add a menu item with "X" image, which is clicked to quit the program
-    //    you may modify it.
-
-    // add a "close" icon to exit the progress. it's an autorelease object
-    auto closeItem = MenuItemImage::create(
-                                           "CloseNormal.png",
-                                           "CloseSelected.png",
-                                           CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
+    visibleSize = Director::getInstance()->getVisibleSize();
+    origin = Director::getInstance()->getVisibleOrigin();
     
-	closeItem->setPosition(Vec2(origin.x + visibleSize.width - closeItem->getContentSize().width/2 ,
-                                origin.y + closeItem->getContentSize().height/2));
-
-    // create menu, it's an autorelease object
-    auto menu = Menu::create(closeItem, NULL);
-    menu->setPosition(Vec2::ZERO);
-    this->addChild(menu, 1);
-
-    /////////////////////////////
-    // 3. add your codes below...
-
-    // add a label shows "Hello World"
-    // create and initialize a label
+    tileMapLayer = Layer::create();
+    tileMap = TMXTiledMap::create("map_02.tmx");
+    domainLayer = tileMap->getLayer("Domain");
+    wallLayer = tileMap->getLayer("Wall");
     
-    auto label = LabelTTF::create("Hello World", "Arial", 24);
+    Size domainSize = domainLayer->getLayerSize();
+    int worldGrid[static_cast<int>(domainSize.width)][static_cast<int>(domainSize.height)];
+
+//    typedef std::array<std::array<int,12>,12> WorldGrid;
+//    WorldGrid worldGrid;
+//    std::array<int, 12> worldGridX;
+//    std::fill(std::begin(worldGridX), std::end(worldGridX), 0);
+//    std::fill(std::begin(worldGrid), std::end(worldGrid), worldGridX);
+
+    for (int x = 0; x < sizeof(worldGrid) / sizeof(worldGrid[0]); ++x) {
+            for (int y = 0; y < sizeof(worldGrid[x]) / sizeof(worldGrid[x][0]); ++y) {
+                worldGrid[x][y] = (0 != wallLayer->getTileGIDAt(Vec2(x,y)));
+            }
+    }
+    for (int x = 0; x < sizeof(worldGrid) / sizeof(worldGrid[0]); ++x) {
+        for (int y = 0; y < sizeof(worldGrid[x]) / sizeof(worldGrid[x][0]); ++y) {
+            CCLOG("(x,y) = (%i,%i) => %i", x,y,worldGrid[x][y]);
+        }
+    }
+
+    tileMapLayer->addChild(tileMap);
+    tileMapLayer->setContentSize(domainLayer->getContentSize());
     
-    // position the label on the center of the screen
-    label->setPosition(Vec2(origin.x + visibleSize.width/2,
-                            origin.y + visibleSize.height - label->getContentSize().height));
-
-    // add the label as a child to this layer
-    this->addChild(label, 1);
-
-    // add "HelloWorld" splash screen"
-    auto sprite = Sprite::create("HelloWorld.png");
-
-    // position the sprite on the center of the screen
-    sprite->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
-
-    // add the sprite as a child to this layer
-    this->addChild(sprite, 0);
+    auto lister = EventListenerTouchOneByOne::create();
+    lister->onTouchBegan = CC_CALLBACK_2(HelloWorld::onTouchBegan, this);
+    lister->onTouchMoved = CC_CALLBACK_2(HelloWorld::onTouchMoved, this);
+    lister->onTouchEnded = CC_CALLBACK_2(HelloWorld::onTouchEnded, this);
+    lister->onTouchCancelled = CC_CALLBACK_2(HelloWorld::onTouchCancelled, this);
+    domainLayer->getEventDispatcher()->addEventListenerWithSceneGraphPriority(lister, domainLayer);
+    
+    this->addChild(tileMapLayer);
     
     return true;
 }
 
-
-void HelloWorld::menuCloseCallback(Ref* pSender)
+bool HelloWorld::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-	MessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
-    return;
-#endif
+    Size tileSize = tileMap->getTileSize();
+    Point domainLocation = domainLayer->convertToNodeSpace(touch->getLocation());
+    Size domainSize = domainLayer->getContentSize();
+    float slopeFormula = tileSize.height / tileSize.width;
+    float tileX = floor((slopeFormula * domainLocation.x + domainSize.height * 0.5 - domainLocation.y) / tileSize.height);
+    float tileY = floor((-slopeFormula * domainLocation.x + domainSize.height * 1.5 - domainLocation.y) / tileSize.height);
+    Point departurePoint = domainLayer->getPositionAt(Vec2(tileX, tileY)) + tileSize * 0.5;
+    
+    SpriteBatchNode* spritebatch = SpriteBatchNode::create("CloseNormal.png");
+    auto spriteArcher = Sprite::create("CloseNormal.png");
+    spritebatch->addChild(spriteArcher);
+    spritebatch->setPosition(departurePoint);
+    tileMapLayer->addChild(spritebatch);
+    
+    Point destinationPoint = domainLayer->getPositionAt(Vec2(5,5)) + tileSize * 0.5;
+    spritebatch->runAction(MoveTo::create(0.5f, destinationPoint));
+    
+    return true;
+}
 
-    Director::getInstance()->end();
+void HelloWorld::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *unused_event)
+{
+    CCLOG("2. moved");
+}
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
-#endif
+void HelloWorld::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *unused_event)
+{
+    CCLOG("3. ended");
+}
+
+void HelloWorld::onTouchCancelled(cocos2d::Touch *touch, cocos2d::Event *unused_event)
+{
+    CCLOG("4. cancelled");
 }
